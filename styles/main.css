@@ -1,3 +1,8 @@
+* {
+	margin: 5px 0;
+	box-sizing: border-box;
+}
+
 body {
 	background-color: #444444;
 	color: white;
@@ -14,4 +19,25 @@ ul	{
 
 li {
 	margin: 10px 0px; 
+}
+
+div{
+	margin: 7px 4px;
+}
+
+.results {
+	border: 1px solid white;
+	width: 500px;
+	margin-top: 20px;
+}
+
+.inline {
+	display: inline-block;
+	width : 100px;
+}
+
+
+
+.term, .trans {
+	
 }
