@@ -25,6 +25,7 @@ div{
 	margin: 7px 4px;
 }
 
+
 .results {
 	border: 1px solid white;
 	width: 500px;
@@ -34,6 +35,10 @@ div{
 .inline {
 	display: inline-block;
 	width : 100px;
+}
+
+button[name="convert"] {
+	display: block;
 }
 
 
