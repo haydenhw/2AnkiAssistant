@@ -1,22 +1,31 @@
 var state = {
 	currTerm: null,
-	wordList: []
+	wordList: [],
+	errorMessages: {
+		emptySearch: "Please enter a search term",
+		termNotFound: "Sorry, we don't have a traslation for that term.<br>" +
+		 			  "Please check for spelling errors or try another term."
+					  
+	}
 }
 
 function processSearchResults(state, term, elements) {
 	return function(data) {
-		var termData = {
-			term: term, 
- 			translation: data.tuc[0].phrase.text,
- 			nativeDef: data.tuc[0].meanings[2].text,
- 			targetDef: data.tuc[0].meanings[1].text,
-	 	}
-
-	state.currTerm = termData; 	
-	renderSearchResults(termData, elements);
+		if(data.tuc[0]){
+			var termData = {
+				term: term, 
+	 			translation: data.tuc[0].phrase.text,
+	 			nativeDef: data.tuc[0].meanings[2].text,
+	 			targetDef: data.tuc[0].meanings[1].text
+	 		}
+	 		state.currTerm = termData; 	
+			renderSearchResults(termData, elements);
+	 	}	
+		else {
+			renderError(state.errorMessages.termNotFound, elements)
+		}	
 	}
 }
-
 function getApiData(state, BASE_URL, searchString, callback, elements){
 	var elementObj = elements;
 	var term = searchString;
@@ -44,7 +53,7 @@ function listToString(list){
 }
 
 function renderSearchResults(termData, elements){
-	var template = $(
+	var template = $(	
 	"<div class='js-termTrans'>"+
 		"<div class='js-term term inline'></div>"+
 		"<div class='js-trans trans inline'></div>"+
@@ -89,17 +98,29 @@ function renderList(state){
 	$(".js-list").append("<button name='convert'>Convert!</button>");
 }
 
+function renderError(msg, elements){
+	console.log(msg);
+	elements.error.text(msg);
+}
+
 function submitHandler(state, BASE_URL, elements) {
 	$("form").submit(function(e){
 		e.preventDefault();
+		renderError("", elements);
+		elements.results.html("").removeClass("results");
 		var searchString = $("input[name='js-vidSearch']").val();
-		getApiData(state, BASE_URL, searchString, processSearchResults, elements);
+		if(searchString){
+			getApiData(state, BASE_URL, searchString, processSearchResults, elements);
+		}
+		else{
+			renderError(state.errorMessages.emptySearch, elements);
+		}
 		this.reset();
 	});	
 }
 
 function addTermHandler(state) {
-	$(".js-addTerm").click(function(){
+	$(".js-results").on("click", "button" ,function(){
 		state.wordList.push(state.currTerm);
 		renderList(state);
 	});
@@ -135,7 +156,8 @@ function main() {
 		term: ".js-term",
 		nativeDef: ".js-nativeDef",
 		targetDef: ".js-targetDef",
-		textArea: $(".js-textArea")
+		textArea: $(".js-textArea"),
+		error: $(".js-error")
 	}
 	submitHandler (state, BASE_URL, elements);
 	addTermHandler(state);
