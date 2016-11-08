@@ -8,26 +8,22 @@
 <body>
 	<h1>Anki Assistant</h1>
 	<form>
-		<label>Seach for a new word: </label>
+		<label>Search for a new word: </label>
 		<input type="text" name="js-vidSearch">
-		<button type="submit">Submit</button>		
+		<button type="submit">Submit</button>
+		<div class="js-error"></div>		
 	</form>
 
-	<div class="js-results results">
-		<div class="js-termTrans">
-			<div class="js-term term inline"></div>
-			<div class="js-trans trans inline"></div>
-		</div>
-		<div class="js-nativeDef"></div>
-		<div class="js-targetDef"></div>
-		<button class="js-addTerm" name="addTerm">Add</button>
-	</div>
-
+	<div class="js-results"></div>
 	<div class="js-list"></div>
+	<div class="js-textArea"></div>
 
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
 	<script type="text/javascript" src="scripts/app.js"></script>
 </body>
 </html>
+
+
+<!-- "<div class='js-listItem listItem' id='" + idx + '>" + -->
 
 
