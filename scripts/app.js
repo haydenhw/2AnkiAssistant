@@ -16,7 +16,7 @@ function processSearchResults(state, term, elements) {
 			var termData = {
 				term: term, 
 	 			translation: data.tuc[0].phrase.text,
-	 			//nativeDef: data.tuc[0].meanings[2].text,
+	 			nativeDef: data.tuc[0].meanings[2].text,
 	 			targetDef: data.tuc[0].meanings[1].text
 	 		}
 	 		state.currTerm = termData; 	
@@ -27,6 +27,7 @@ function processSearchResults(state, term, elements) {
 		}	
 	}
 }
+
 function getApiData(state, BASE_URL, searchString, callback, elements){
 	var elementObj = elements;
 	var term = searchString;
@@ -55,36 +56,39 @@ function listToString(list){
 
 function renderSearchResults(termData, elements){
 	var template = $(	
-	"<div class='js-termTrans'>"+
-		"<div class='js-term term inline'></div>"+
-		"<div class='js-trans trans inline'></div>"+
-	"</div>"+
-	//"<div class='js-nativeDef'>" + termData.nativeDef + "</div>"+
-	"<div class='js-targetDef'>" + termData.targetDef + "</div>"+
-	"<button class='js-addTerm' name='addTerm'>Add</button>"
+	"<div>"+
+		"<div class='js-termTrans'>"+
+			"<div class='js-term term inline'></div>"+
+			"<div class='js-trans trans inline'></div>"+
+		"</div>"+
+		"<div class='js-native'></div>"+
+		"<div class='js-target'></div>"+
+		"<button class='js-addTerm' name='addTerm'>Add</button>"+
+	"</div>"
 	);
-
+	
 	template.find(elements.term).text(termData.term);
 	template.find(elements.trans).text(termData.translation);	
-	//template.find(".js-nativeDef").text(termData.nativeDef);	
-	//template.find(elements.targetDef).text(termData.targetDef);	
+	template.find(".js-native").text(termData.nativeDef);	
+	template.find(".js-target").text(termData.targetDef);	
 
 	elements.results.html(template).addClass("results");
 }
 
 
 function renderItem(term, trans, idx){
-	var template = $("<div class='js-listItem listItem'>" +
-					"	<div class='js-term inline'></div>"+
-					"	<div class='js-trans inline'></div>"+
-					"<button class='inline' name='removeTerm'>Remove</button>"+
-					"</div>");
+	var template = $("<div>"+
+						"<div class='js-listItem listItem'>" +
+						"	<div class='js-term inline'></div>"+
+						"	<div class='js-trans inline'></div>"+
+						"<button class='inline' name='removeTerm'>Remove</button>"+
+						"</div>"+
+					"</div>"
+					);
 
 	template.find(".js-term").text(term);
 	template.find(".js-trans").text(trans);
-	template.find(".js-term").attr("id", idx);//("color","red")//.attr("id", "spank");
-	var out = template.find(".js-term").attr("id");
-	console.log(out);
+	template.find(".js-listItem").attr("id", idx);//("color","red")//.attr("id", "spank");
 
 	return template;	
 }
@@ -101,7 +105,7 @@ function renderList(state){
 
 function renderError(msg, elements){
 	console.log(msg);
-	elements.error.text(msg);
+	elements.error.html(msg);
 }
 
 function submitHandler(state, BASE_URL, elements) {
@@ -164,10 +168,7 @@ function main() {
 	addTermHandler(state);
 	removeTermHandler(state);
 	convertHandler(state, elements);
-	/*$(".js-list").attr("id", 2)
-	var out = $(".js-list").attr("id");
-	console.log(out);*/
-
+	
 }
 
 
