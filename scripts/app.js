@@ -17,8 +17,6 @@ function processSearchResults(state, term, elements) {
 	}
 }
 
-
-
 function getApiData(state, BASE_URL, searchString, callback, elements){
 	var elementObj = elements;
 	var term = searchString;
@@ -34,6 +32,11 @@ function getApiData(state, BASE_URL, searchString, callback, elements){
 	$.getJSON(BASE_URL, query, callback(state, term, elementObj));
 }
 
+function removeTerm(state, idx){
+	state.wordList.splice(idx,1);
+	renderList(state); 
+}
+
 function listToString(list){
 	return list.reduce(function (av, cv){
 		return av + cv.term + " ; " + cv.translation + "\n"
@@ -41,22 +44,45 @@ function listToString(list){
 }
 
 function renderSearchResults(termData, elements){
-		elements.term.text(termData.term);
-		elements.trans.text(termData.translation);	
-		elements.nativeDef.text(termData.nativeDef);	
-		elements.targetDef.text(termData.targetDef);	
+	var template = $(
+	"<div class='js-termTrans'>"+
+		"<div class='js-term term inline'></div>"+
+		"<div class='js-trans trans inline'></div>"+
+	"</div>"+
+	"<div class='js-nativeDef'>" + termData.nativeDef + "</div>"+
+	"<div class='js-targetDef'>" + termData.targetDef + "</div>"+
+	"<button class='js-addTerm' name='addTerm'>Add</button>"
+	);
+
+	template.find(elements.term).text(termData.term);
+	template.find(elements.trans).text(termData.translation);	
+	//template.find(".js-nativeDef").text(termData.nativeDef);	
+	//template.find(elements.targetDef).text(termData.targetDef);	
+
+	elements.results.html(template).addClass("results");
+}
+
+
+function renderItem(term, trans, idx){
+	var template = $("<div class='js-listItem listItem'>" +
+					"	<div class='js-term inline'></div>"+
+					"	<div class='js-trans inline'></div>"+
+					"<button class='inline' name='removeTerm'>Remove</button>"+
+					"</div>");
+
+	template.find(".js-term").text(term);
+	template.find(".js-trans").text(trans);
+	template.find(".js-term").attr("id", idx);//("color","red")//.attr("id", "spank");
+	var out = template.find(".js-term").attr("id");
+	console.log(out);
+
+	return template;	
 }
 
 
 function renderList(state){
-
-
-	var listHTML = state.wordList.map(term =>
-			"<div class='listItem'>"+
-			"	<div class='term inline'>" + term.term +"</div>"+
-			"	<div class='trans inline'>" + term.translation + "</div>"+
-			"<button class='inline' name='removeTerm'>Remove</button>"+
-			"</div>"
+	var listHTML = state.wordList.map((term, idx) =>
+			renderItem(term.term, term.translation, idx)
 		);
 
 	$(".js-list").html(listHTML);
@@ -68,6 +94,7 @@ function submitHandler(state, BASE_URL, elements) {
 		e.preventDefault();
 		var searchString = $("input[name='js-vidSearch']").val();
 		getApiData(state, BASE_URL, searchString, processSearchResults, elements);
+		this.reset();
 	});	
 }
 
@@ -80,8 +107,8 @@ function addTermHandler(state) {
 
 function removeTermHandler(state){
 	$(".js-list").on("click", "button[name='removeTerm']" ,function(){
-		console.log("hello");
-		//removeTerm(state);
+		var id = $(this).parent().find(".js-term").attr("id");//.css({"color": "red", "border": "2px solid red"});
+		removeTerm(state, id);
 	});
 }
 
@@ -103,17 +130,20 @@ function main() {
 	var BASE_URL = "https://glosbe.com/gapi/translate?callback=?";
 	var elements = {
 		results: $(".js-results"),
-		termTrans: $(".js-termTrans"),
-		trans: $(".js-trans"),
-		term: $(".js-term"),
-		nativeDef: $(".js-nativeDef"),
-		targetDef: $(".js-targetDef"),
+		termTrans: ".js-termTrans",
+		trans: ".js-trans",
+		term: ".js-term",
+		nativeDef: ".js-nativeDef",
+		targetDef: ".js-targetDef",
 		textArea: $(".js-textArea")
 	}
 	submitHandler (state, BASE_URL, elements);
 	addTermHandler(state);
 	removeTermHandler(state);
 	convertHandler(state, elements);
+	/*$(".js-list").attr("id", 2)
+	var out = $(".js-list").attr("id");
+	console.log(out);*/
 
 }
 
