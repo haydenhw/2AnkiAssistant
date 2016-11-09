@@ -24,7 +24,10 @@ function processSearchResults(state, term, elements) {
 	 	}	
 		else {
 			renderError(state.errorMessages.termNotFound, elements)
-		}	
+		}
+		//For Testing
+		state.wordList.push(state.currTerm);
+		renderList(state);	
 	}
 }
 
@@ -57,13 +60,13 @@ function listToString(list){
 function renderSearchResults(termData, elements){
 	var template = $(	
 	"<div>"+
-		"<div class='js-termTrans'>"+
+		"<div class='js-termTrans termTrans'>"+
 			"<div class='js-term term inline'></div>"+
 			"<div class='js-trans trans inline'></div>"+
+			"<button class='js-addTerm inline' name='addTerm'>Add</button>"+
 		"</div>"+
 		"<div class='js-native'></div>"+
-		"<div class='js-target'></div>"+
-		"<button class='js-addTerm' name='addTerm'>Add</button>"+
+		"<div class='js-target'></div>"+		
 	"</div>"
 	);
 	
@@ -89,23 +92,28 @@ function renderItem(term, trans, idx){
 	template.find(".js-term").text(term);
 	template.find(".js-trans").text(trans);
 	template.find(".js-listItem").attr("id", idx);//("color","red")//.attr("id", "spank");
-
 	return template;	
 }
 
-
 function renderList(state){
+	
 	var listHTML = state.wordList.map((term, idx) =>
 			renderItem(term.term, term.translation, idx)
 		);
 
 	$(".js-list").html(listHTML);
-	$(".js-list").append("<button name='convert'>Convert!</button>");
+	$(".js-list-container").append("<button name='convert'>Convert!</button>");
 }
 
 function renderError(msg, elements){
 	console.log(msg);
 	elements.error.html(msg);
+}
+
+function renderTextArea(output, elements){
+	var textAreaHTML = "<textarea rows='50' cols='50'></textarea>";
+	elements.textArea.html(textAreaHTML);
+	elements.textArea.find("textarea").val(output);
 }
 
 function submitHandler(state, BASE_URL, elements) {
@@ -138,12 +146,6 @@ function removeTermHandler(state){
 	});
 }
 
-function renderTextArea(output, elements){
-	var textAreaHTML = "<textarea rows='50' cols='50'></textarea>";
-	elements.textArea.html(textAreaHTML);
-	elements.textArea.find("textarea").val(output);
-}
-
 function convertHandler(state, elements){
 	$(".js-list").on("click", "button[name='convert']", function(){
 		var output = listToString(state.wordList)
@@ -168,6 +170,10 @@ function main() {
 	addTermHandler(state);
 	removeTermHandler(state);
 	convertHandler(state, elements);
+
+	//For Testing
+	getApiData(state, BASE_URL, "apple" , processSearchResults, elements);
+	
 	
 }
 

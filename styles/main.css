@@ -1,40 +1,80 @@
 * {
-	margin: 5px 0;
+
 	box-sizing: border-box;
 }
 
 body {
 	background-color: #444444;
 	color: white;
-	padding: 100px; 	
+}
+
+.container {
+	/*border: 1px solid black;*/
+	margin-left: 15%;
+	margin-right: 15%;
+}
+
+.module {
+	margin: 40px 0;
+}
+
+.inline {
+	display: inline-block;
+	width : 100px;
 }
 
 label {
 	display: block;
 }
 
-ul	{
-	list-style-type: none;
-}
+.listContainer {
+	/*border: 1px solid white;*/
 
-li {
-	margin: 10px 0px; 
 }
-
-div{
-	margin: 7px 4px;
-}
-
 
 .results {
 	border: 1px solid white;
-	width: 500px;
+	width: 100%;
 	margin-top: 20px;
+	padding: 10px;
+	position: relative;
 }
 
-.inline {
-	display: inline-block;
-	width : 100px;
+.results div {
+	margin-bottom: 10px;
+}
+
+.termTrans {
+	margin-bottom: 10px;
+}
+
+.term, .trans {
+	border: 1px solid white;
+	padding-top: 0px;
+	vertical-align: bottom;
+	height: 40px;
+}
+
+button[name="addTerm"] {
+	position: absolute;
+	width: 50px;
+	left: 100%;
+	margin-left: -60px;
+}
+
+.listItems {
+	position: relative;
+	border: 1px solid white;
+	padding: 10px;
+	margin-top: 5px;
+	background-color: #666666
+}
+
+button[name="removeTerm"] {
+	position: absolute;
+	width: 85px;
+	left: 100%;
+	margin-left: -95px;
 }
 
 button[name="convert"] {

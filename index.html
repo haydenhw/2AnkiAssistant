@@ -2,21 +2,42 @@
 <html>
 <head>
 	<title></title>
-	<link rel="stylesheet" href="styles/main.css" >
+	<link rel="stylesheet" href="styles/main.css">
+	<link rel="stylesheet" href="styles/float-grid.css">
+	<link rel="stylesheet" href="styles/reset.css">
+
+
 	<!-- <link rel="stylesheet" type="text/css" href="main.css"> -->
 </head>
 <body>
-	<h1>Anki Assistant</h1>
-	<form>
-		<label>Search for a new word: </label>
-		<input type="text" name="js-vidSearch">
-		<button type="submit">Submit</button>
-		<div class="js-error"></div>		
-	</form>
 
-	<div class="js-results"></div>
-	<div class="js-list"></div>
-	<div class="js-textArea"></div>
+	<div class="row">
+		<div class="col12">
+			<div class="container">
+				<h1>Anki Assistant</h1>
+				<div class="module">
+					<form>
+						<label>Search for a new word: </label>
+						<input type="text" name="js-vidSearch">
+						<button type="submit">Submit</button>
+						<div class="js-error"></div>		
+					</form>
+				</div>
+				<div class="js-results module"></div>
+				<div class="js-list-container listContainer module">
+					<h3>My List</h3>
+					<div class="js-list listItems "></div>
+				</div>
+		
+				<div class="js-textArea module"></div>			
+				
+			</div>
+			</div>
+		</div>
+	</div>
+
+	
+
 
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
 	<script type="text/javascript" src="scripts/app.js"></script>
