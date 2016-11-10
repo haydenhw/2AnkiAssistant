@@ -10,7 +10,7 @@ body {
 }
 
 .container {
-	margin: 0;
+	/*margin: 0;*/
 }
 
 header {
@@ -66,6 +66,7 @@ input[type="text"]{
 	padding: 10px;
 	border-radius: 3px;
 	height: 50px;
+	font-size: 25px;
 }
 
 .searchContainer {
@@ -82,7 +83,7 @@ input[type="text"]{
 	margin-top: 20px;
 	padding: 10px;
 	position: relative;
-	font-size: 40px;
+	font-size: 25px;
 }
 
 .results div {
@@ -102,14 +103,15 @@ input[type="text"]{
 }
 
 .def {
-	font-size: 13px;	
+	font-size: 12px;	
 }
 
 button[name="addTerm"] {
 	position: absolute;
-	width: 100px;
+	width: 75px;
 	left: 100%;
-	margin-left: -110px;
+	padding: 10px 20px;
+	margin-left: -85px;
 }
 
 /*List Module*/
@@ -128,22 +130,23 @@ button[name="addTerm"] {
 }
 
 .listItems > div {
-	margin-top: 5px;
+	margin-top: 10px;
 	border: none;
 }
 
 button[name="removeTerm"] {
 	position: absolute;
-	width: 125px;
+	width: 75px;
 	left: 100%;
-	margin-left: -135px;
+	margin-left: -85px;
+	background-color: #d9534f;
 }
 
 button[name="convert"] {
 	position: absolute;
-	width: 135px;
+	width: 145px;
 	left: 100%;
-	margin-left: -145px;
+	margin-left: -155px;
 	margin-top: 10px;
 
 }
@@ -152,10 +155,10 @@ button[name="convert"] {
 
 
 
-/*
+
 @media only screen and (min-width: 640px) {
 	.container {
 		margin-left: 15%;
 		margin-right: 15%;
 	}	
-}*/
+}

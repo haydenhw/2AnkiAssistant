@@ -85,7 +85,7 @@ function renderItem(term, trans, idx){
 		"<div class='js-listItem listItem'>" +
 		"	<div class='js-term term inline'></div>"+
 		"	<div class='js-trans trans inline'></div>"+
-		"<button class='inline' name='removeTerm'>Remove</button>"+
+		"<button class='inline' name='removeTerm'>X</button>"+
 		"</div>");
 
 	template.find(".js-term").text(term);
