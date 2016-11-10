@@ -7,18 +7,24 @@
 	<link rel="stylesheet" href="styles/main.css">
 
 </head>
+<body>
 
+	<header>
+		<h1>AnkiAssistant</h1>				
+	</header>
 
 	<div class="row">
 		<div class="col12">
 			<div class="container">
-				<h1>Anki Assistant</h1>
 				<div class="module">
 					<form>
 						<div>
 							<label>Search for a new word: </label>
-							<input type="text" name="js-vidSearch">
-							<button type="submit">Submit</button>
+							<div class="searchContainer">
+								<input type="text" name="js-vidSearch">
+								<input class="js-search" type="image" alt="search icon"   src="http://iconshow.me/media/images/ui/ios7-icons/png/256/search_1.png">	
+							</div>
+							<!-- <button type="submit">Submit</button> -->
 							<div class="js-error error"></div>		
 						</div>
 					</form>
