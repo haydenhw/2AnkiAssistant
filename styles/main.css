@@ -9,9 +9,6 @@ body {
 	margin: ;	
 }
 
-.container {
-	/*margin: 0;*/
-}
 
 header {
 	background-color: #666666;
@@ -31,7 +28,6 @@ header h1 {
 	display: inline-block;
 	width : 100px;
 }
-
 
 button {
     background-color: #4CAF50; 
@@ -103,7 +99,7 @@ input[type="text"]{
 }
 
 .def {
-	font-size: 12px;	
+	font-size: .6em;	
 }
 
 button[name="addTerm"] {

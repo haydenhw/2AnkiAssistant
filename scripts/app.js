@@ -3,8 +3,7 @@ var state = {
 	wordList: [],
 	errorMessages: {
 		emptySearch: "Please enter a search term",
-		termNotFound: "Sorry, we don't have a traslation for that term.<br>" +
-		 			  "Please check for spelling errors or try another term."
+		termNotFound: "Sorry, we don't have a traslation for that term.<br>Please check for spelling errors or try another term." 
 					  
 	}
 }
@@ -55,11 +54,10 @@ function listToString(list){
 	return list.reduce(function (av, cv){
 		return av + cv.term + " ; " + cv.translation + "\n"
 	}, "")
-}
+};
 
 function renderSearchResults(termData, elements){
 	var template = $(	
-	
 	"<div>"+
 		"<div class='js-termTrans termTrans'>"+
 			"<div class='js-term term inline'></div>"+
