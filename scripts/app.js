@@ -23,9 +23,14 @@ function processSearchResults(state, term, elements) {
 	 	}	
 		else {
 			renderError(state.errorMessages.termNotFound, elements)
-		}	
+		}
+	//For Testing
+		// state.wordList.push(state.currTerm);
+		// renderList(state);	
 	}
 }
+
+
 function getApiData(state, BASE_URL, searchString, callback, elements){
 	var elementObj = elements;
 	var term = searchString;
@@ -54,53 +59,64 @@ function listToString(list){
 
 function renderSearchResults(termData, elements){
 	var template = $(	
-	"<div class='js-termTrans'>"+
-		"<div class='js-term term inline'></div>"+
-		"<div class='js-trans trans inline'></div>"+
-	"</div>"+
-	"<div class='js-nativeDef'>" + termData.nativeDef + "</div>"+
-	"<div class='js-targetDef'>" + termData.targetDef + "</div>"+
-	"<button class='js-addTerm' name='addTerm'>Add</button>"
+	
+	"<div>"+
+		"<div class='js-termTrans termTrans'>"+
+			"<div class='js-term term inline'></div>"+
+			"<div class='js-trans trans inline'></div>"+
+			"<button class='js-addTerm inline' name='addTerm'>Add</button>"+
+		"</div>"+
+		"<div class='js-native def'></div>"+
+		"<div class='js-target def'></div>"+		
+	"</div>"
 	);
-
+	
 	template.find(elements.term).text(termData.term);
 	template.find(elements.trans).text(termData.translation);	
-	//template.find(".js-nativeDef").text(termData.nativeDef);	
-	//template.find(elements.targetDef).text(termData.targetDef);	
+	template.find(".js-native").text(termData.nativeDef);	
+	template.find(".js-target").text(termData.targetDef);	
 
 	elements.results.html(template).addClass("results");
 }
 
 
 function renderItem(term, trans, idx){
-	var template = $("<div class='js-listItem listItem'>" +
-					"	<div class='js-term inline'></div>"+
-					"	<div class='js-trans inline'></div>"+
-					"<button class='inline' name='removeTerm'>Remove</button>"+
-					"</div>");
+	var template = $(
+		"<div class='js-listItem listItem'>" +
+		"	<div class='js-term term inline'></div>"+
+		"	<div class='js-trans trans inline'></div>"+
+		"<button class='inline' name='removeTerm'>Remove</button>"+
+		"</div>");
 
 	template.find(".js-term").text(term);
 	template.find(".js-trans").text(trans);
-	template.find(".js-term").attr("id", idx);//("color","red")//.attr("id", "spank");
-	var out = template.find(".js-term").attr("id");
-	console.log(out);
+	template.find(".js-term").attr("id", idx);
+	
 
 	return template;	
 }
 
 
+
 function renderList(state){
-	var listHTML = state.wordList.map((term, idx) =>
+		var listHTML = state.wordList.map((term, idx) =>
 			renderItem(term.term, term.translation, idx)
 		);
 
 	$(".js-list").html(listHTML);
-	$(".js-list").append("<button name='convert'>Convert!</button>");
 }
 
 function renderError(msg, elements){
 	console.log(msg);
 	elements.error.text(msg);
+	elements.error.html(msg);
+}
+
+function renderTextArea(output, elements){
+	//var msg = "Add to your list by searching for a word and clicking the add button"
+	var textAreaHTML = "<textarea class='module' rows='50' cols='50'></textarea>";
+	elements.textArea.html(textAreaHTML);
+	elements.textArea.find("textarea").val(output);
 }
 
 function submitHandler(state, BASE_URL, elements) {
@@ -133,14 +149,9 @@ function removeTermHandler(state){
 	});
 }
 
-function renderTextArea(output, elements){
-	var textAreaHTML = "<textarea rows='50' cols='50'></textarea>";
-	elements.textArea.html(textAreaHTML);
-	elements.textArea.find("textarea").val(output);
-}
 
 function convertHandler(state, elements){
-	$(".js-list").on("click", "button[name='convert']", function(){
+	$("button[name='convert']").on("click", function(){
 		var output = listToString(state.wordList)
 		renderTextArea(output, elements);
 		console.log(output);
@@ -167,6 +178,10 @@ function main() {
 	var out = $(".js-list").attr("id");
 	console.log(out);*/
 
+	//For Testing
+	getApiData(state, BASE_URL, "apple" , processSearchResults, elements);
+	
+	
 }
 
 

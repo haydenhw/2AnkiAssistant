@@ -1,35 +1,21 @@
 * {
-	margin: 5px 0;
 	box-sizing: border-box;
+
 }
 
 body {
 	background-color: #444444;
 	color: white;
-	padding: 100px; 	
+	font-size: 25px;
+		
 }
 
-label {
-	display: block;
+.container {
+	
 }
 
-ul	{
-	list-style-type: none;
-}
-
-li {
-	margin: 10px 0px; 
-}
-
-div{
-	margin: 7px 4px;
-}
-
-
-.results {
-	border: 1px solid white;
-	width: 500px;
-	margin-top: 20px;
+.module {
+	margin: 40px 0;
 }
 
 .inline {
@@ -37,7 +23,110 @@ div{
 	width : 100px;
 }
 
-button[name="convert"] {
+label {
 	display: block;
 }
 
+button {
+    background-color: #4CAF50; 
+    border: none;
+    color: white;
+    padding: 10px 32px;
+    text-align: center;
+    display: inline-block;
+    border-radius: 3px;
+    width: 75px;
+    /*font-size: 16px;*/
+}
+
+input {
+	margin-top: 5px;
+	width: 75%;
+	padding: 10px;
+	border-radius: 3px;
+}
+
+/*Results Module*/
+
+.results {
+	border: 1px solid white;
+	width: 100%;
+	margin-top: 20px;
+	padding: 10px;
+	position: relative;
+}
+
+.results div {
+	margin-bottom: 10px;
+}
+
+
+.termTrans {
+	margin-bottom: 10px;
+}
+
+.term, .trans {
+	border: 1px solid white;
+	padding-top: 0px;
+	vertical-align: bottom;
+	height: 40px;
+}
+
+.def {
+	font-size: .75em;	
+}
+
+button[name="addTerm"] {
+	position: absolute;
+	width: 75px;
+	left: 100%;
+	margin-left: -85px;
+}
+
+/*List Module*/
+
+.listContainer {
+	position: relative;
+}
+
+.listItems {
+	position: relative;
+	border: 1px solid white;
+	padding: 10px;
+	margin-top: 5px;
+	background-color: #666666;
+	min-height: 200px;
+}
+
+.listItems > div {
+	margin-top: 5px;
+	border: none;
+}
+
+button[name="removeTerm"] {
+	position: absolute;
+	width: 100px;
+	left: 100%;
+	margin-left: -110px;
+}
+
+button[name="convert"] {
+	position: absolute;
+	width: 120px;
+	left: 100%;
+	margin-left: -125px;
+	margin-top: 10px;
+
+}
+
+/*Text Area*/
+
+
+
+
+@media only screen and (min-width: 640px) {
+	.container {
+		margin-left: 15%;
+		margin-right: 15%;
+	}	
+}
