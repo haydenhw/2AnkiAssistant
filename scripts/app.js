@@ -14,8 +14,6 @@ function processSearchResults(state, term, elements) {
 			var termData = {
 				term: term, 
 	 			translation: data.tuc[0].phrase.text,
-	 			nativeDef: data.tuc[0].meanings[2].text,
-	 			targetDef: data.tuc[0].meanings[1].text
 	 		}
 	 		state.currTerm = termData; 	
 			renderSearchResults(termData, elements);
@@ -23,12 +21,8 @@ function processSearchResults(state, term, elements) {
 		else {
 			renderError(state.errorMessages.termNotFound, elements)
 		}
-	//For Testing
-		// state.wordList.push(state.currTerm);
-		// renderList(state);	
 	}
 }
-
 
 function getApiData(state, BASE_URL, searchString, callback, elements){
 	var elementObj = elements;
@@ -78,7 +72,7 @@ function renderSearchResults(termData, elements){
 }
 
 
-function renderItem(term, trans, idx){
+function renderItem(state, term, trans, idx){
 	var template = $(
 		"<div class='js-listItem listItem'>" +
 		"	<div class='js-term term inline'></div>"+
@@ -88,8 +82,9 @@ function renderItem(term, trans, idx){
 
 	template.find(".js-term").text(term);
 	template.find(".js-trans").text(trans);
-	template.find(".js-term").attr("id", idx);
-	
+	template.find("button[name='removeTerm']").click(function(){
+		removeTerm(state, idx);
+	});
 
 	return template;	
 }
@@ -98,31 +93,31 @@ function renderItem(term, trans, idx){
 
 function renderList(state){
 		var listHTML = state.wordList.map((term, idx) =>
-			renderItem(term.term, term.translation, idx)
+			renderItem(state, term.term, term.translation, idx)
 		);
 
 	$(".js-list").html(listHTML);
 }
 
 function renderError(msg, elements){
-	console.log(msg);
-	elements.error.text(msg);
 	elements.error.html(msg);
 }
 
 function renderTextArea(output, elements){
-	//var msg = "Add to your list by searching for a word and clicking the add button"
-	var textAreaHTML = "<textarea class='module' rows='50' cols='50'></textarea>";
+	var msg = "Almost done! Now just copy and paste this semicolon-separated list into a text file on your desktop and import into Anki."
+	var textAreaHTML = "<textarea rows='50' cols='50'></textarea>";
+	elements.instructions.html(msg);
 	elements.textArea.html(textAreaHTML);
 	elements.textArea.find("textarea").val(output);
 }
 
-function submitHandler(state, BASE_URL, elements) {
+function initSubmitHandler (state, BASE_URL, elements) {
 	$("form").submit(function(e){
+		var searchString = $("input[name='js-vidSearch']").val();
 		e.preventDefault();
 		renderError("", elements);
 		elements.results.html("").removeClass("results");
-		var searchString = $("input[name='js-vidSearch']").val();
+
 		if(searchString){
 			getApiData(state, BASE_URL, searchString, processSearchResults, elements);
 		}
@@ -133,26 +128,17 @@ function submitHandler(state, BASE_URL, elements) {
 	});	
 }
 
-function addTermHandler(state) {
+function initAddTermHandler(state) {
 	$(".js-results").on("click", "button" ,function(){
 		state.wordList.push(state.currTerm);
 		renderList(state);
 	});
 }
 
-function removeTermHandler(state){
-	$(".js-list").on("click", "button[name='removeTerm']" ,function(){
-		var id = $(this).parent().find(".js-term").attr("id");//.css({"color": "red", "border": "2px solid red"});
-		removeTerm(state, id);
-	});
-}
-
-
-function convertHandler(state, elements){
+function initConvertHandler(state, elements){
 	$("button[name='convert']").on("click", function(){
 		var output = listToString(state.wordList)
 		renderTextArea(output, elements);
-		console.log(output);
 	});
 }
 
@@ -160,27 +146,19 @@ function main() {
 	var BASE_URL = "https://glosbe.com/gapi/translate?callback=?";
 	var elements = {
 		results: $(".js-results"),
+		textArea: $(".js-textArea"),
+		instructions: $(".js-instructions"),
+		error: $(".js-error"),
 		termTrans: ".js-termTrans",
 		trans: ".js-trans",
 		term: ".js-term",
 		nativeDef: ".js-nativeDef",
-		targetDef: ".js-targetDef",
-		textArea: $(".js-textArea"),
-		error: $(".js-error")
+		targetDef: ".js-targetDef"
 	}
-	submitHandler (state, BASE_URL, elements);
-	addTermHandler(state);
-	removeTermHandler(state);
-	convertHandler(state, elements);
-	/*$(".js-list").attr("id", 2)
-	var out = $(".js-list").attr("id");
-	console.log(out);*/
 
-	//For Testing
-	getApiData(state, BASE_URL, "apple" , processSearchResults, elements);
-	
-	
+	initSubmitHandler(state, BASE_URL, elements);
+	initAddTermHandler(state);
+	initConvertHandler(state, elements);	
 }
-
 
 $(main());
