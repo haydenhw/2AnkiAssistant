@@ -89,8 +89,6 @@ function renderItem(state, term, trans, idx){
 	return template;	
 }
 
-
-
 function renderList(state){
 		var listHTML = state.wordList.map((term, idx) =>
 			renderItem(state, term.term, term.translation, idx)
