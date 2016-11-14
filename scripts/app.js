@@ -16,6 +16,8 @@ function processSearchResults(state, term, elements) {
 			this.back = back;
 		}
 
+		console.log("test");
+
 		FlaschCard.prototype.render = function(state, idx) {
 			var template = $(
 				"<div class='js-listItem listItem'>" +
