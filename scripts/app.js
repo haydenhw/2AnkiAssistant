@@ -12,7 +12,7 @@ function processSearchResults(state, term, elements) {
 		if (data.tuc[0]) {
 			var termData = {
 				term: term, 
-	 			translation: data.tuc[0].phrase.text,
+	 			translation: data.tuc[0].phrase.text
 	 		}
 	 		state.currTerm = termData; 	
 			renderSearchResults(termData, elements);
@@ -24,9 +24,6 @@ function processSearchResults(state, term, elements) {
 }
 
 function getApiData(state, BASE_URL, searchString, callback, elements) {
-	var elementObj = elements;
-	var term = searchString;
-	var state = state;
 	var query = {
 		from: "eng",
 		dest: "spa",
@@ -35,7 +32,7 @@ function getApiData(state, BASE_URL, searchString, callback, elements) {
 		pretty: true
 	};
 
-	$.getJSON(BASE_URL, query, callback(state, term, elementObj));
+	$.getJSON(BASE_URL, query, callback(state, searchString, elements));
 }
 
 function removeTerm(state, idx) {
@@ -102,7 +99,7 @@ function renderTextArea(output, elements) {
 	var msg = "Almost done! Now just copy and paste this semicolon-separated list into a text file on your desktop and import into Anki.";
 	var textAreaHTML = "<textarea rows='50' cols='50'></textarea>";
 	elements.instructions.html(msg);
-	elements.textArea.text(textAreaHTML);
+	elements.textArea.html(textAreaHTML);
 	elements.textArea.find("textarea").val(output);
 }
 
