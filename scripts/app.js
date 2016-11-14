@@ -10,24 +10,39 @@ var state = {
 
 function processSearchResults(state, term, elements) {
 	return function(data) {
+
+		var FlaschCard = function(front, back) {
+			this.front = front;
+			this.back = back;
+		}
+
+		FlaschCard.prototype.render = function(state, idx) {
+			var template = $(
+				"<div class='js-listItem listItem'>" +
+				"	<div class='js-term term inline'></div>"+
+				"	<div class='js-trans trans inline'></div>"+
+				"<button class='inline' name='removeTerm'>X</button>"+
+				"</div>");
+
+			template.find(".js-term").text(this.front);
+			template.find(".js-trans").text(this.back);
+			template.find("button[name='removeTerm']").click(function(){
+				removeTerm(state, idx);
+			});
+
+		return template;	
+		}
+
 		if(data.tuc[0]){
-			var termData = {
-				term: term, 
-	 			translation: data.tuc[0].phrase.text,
-	 		}
-	 		state.currTerm = termData; 	
-			renderSearchResults(termData, elements);
-	 	}	
-		else {
+			state.currTerm =  new FlaschCard(term, data.tuc[0].phrase.text) 	
+			renderSearchResults(state.currTerm, elements);
+	 	} else {
 			renderError(state.errorMessages.termNotFound, elements)
 		}
 	}
 }
 
 function getApiData(state, BASE_URL, searchString, callback, elements){
-	var elementObj = elements;
-	var term = searchString;
-	var state = state;
 	var query = {
 		from: "eng",
 		dest: "spa",
@@ -36,7 +51,7 @@ function getApiData(state, BASE_URL, searchString, callback, elements){
 		pretty: true
 	}
 
-	$.getJSON(BASE_URL, query, callback(state, term, elementObj));
+	$.getJSON(BASE_URL, query, callback(state, searchString, elements));
 }
 
 function removeTerm(state, idx){
@@ -63,16 +78,15 @@ function renderSearchResults(termData, elements){
 	"</div>"
 	);
 	
-	template.find(elements.term).text(termData.term);
-	template.find(elements.trans).text(termData.translation);	
-	template.find(".js-native").text(termData.nativeDef);	
-	template.find(".js-target").text(termData.targetDef);	
+	template.find(elements.term).text(termData.front);
+	template.find(elements.trans).text(termData.back);	
+	//template.find(".js-native").text(termData.nativeDef);	
+	//template.find(".js-target").text(termData.targetDef);	
 
 	elements.results.html(template).addClass("results");
 }
 
-
-function renderItem(state, term, trans, idx){
+/*function renderItem(state, front, back, idx){
 	var template = $(
 		"<div class='js-listItem listItem'>" +
 		"	<div class='js-term term inline'></div>"+
@@ -80,18 +94,19 @@ function renderItem(state, term, trans, idx){
 		"<button class='inline' name='removeTerm'>X</button>"+
 		"</div>");
 
-	template.find(".js-term").text(term);
-	template.find(".js-trans").text(trans);
+	template.find(".js-term").text(front);
+	template.find(".js-trans").text(back);
 	template.find("button[name='removeTerm']").click(function(){
 		removeTerm(state, idx);
 	});
 
 	return template;	
 }
+*/
 
 function renderList(state){
 		var listHTML = state.wordList.map((term, idx) =>
-			renderItem(state, term.term, term.translation, idx)
+			term.render(state, idx)
 		);
 
 	$(".js-list").html(listHTML);
