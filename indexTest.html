@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>AnkiAssistant</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="stylesheet" href="styles/reset.css">
+	<link rel="stylesheet" href="styles/float-grid.css">
+	<link rel="stylesheet" href="styles/main.css">
+
+</head>
+<body>
+
+	<header>
+		<div class="row">
+			<div class="col12">
+				<div class="container">
+				<h1>AnkiAssistant</h1>							
+			</div>	
+			</div>			
+		</div>
+		
+	</header>
+
+	<div class="row">
+		<div class="col12">
+			<div class="container">
+				<div class="module">
+					<form>
+						<div>
+							<label>Search for a new word: </label>
+							<div class="searchContainer">
+								<input type="text" name="js-vidSearch">
+								<input class="js-search" type="image" alt="search icon"   src="http://iconshow.me/media/images/ui/ios7-icons/png/256/search_1.png">	
+							</div>
+							<!-- <button type="submit">Submit</button> -->
+							<div class="js-error error"></div>		
+						</div>
+					</form>
+				</div>
+				<div class="js-results module"></div>
+				<div class="js-list-container listContainer module">
+					<h3>My List</h3>
+					<div class="js-list listItems "></div>
+					<button name='convert'>Convert!</button>
+				</div>
+				
+				<div class="textAreaContainer module">
+					<div class="js-instructions instructions"></div>
+					<div class="js-textArea"></div>				
+				</div>
+				
+				
+			</div>
+			</div>
+		</div>
+	</div>
+
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+	<script type="text/javascript" src="scripts/test.js"></script>
+</body>
+</html>
+
+
+
+
