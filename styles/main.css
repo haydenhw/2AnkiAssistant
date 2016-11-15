@@ -152,16 +152,17 @@ button[name="convert"] {
 
 .textAreaContainer {
 	margin-top: 80px;
-	width: 421px;
+	width: 100%;
 }
 
 textarea {
 	margin-top: 5px;
 	font-size: 15px;
+	width: 100%;
 }
+
 .instructions {
-	font-size: 17px;
-	width: 421px;
+	font-size: 17px;	
 }
 
 
@@ -170,4 +171,14 @@ textarea {
 		margin-left: 15%;
 		margin-right: 15%;
 	}	
+
+	textarea {
+		margin-top: 5px;
+		font-size: 15px;
+	}
+
+	.instructions {
+		font-size: 17px;
+		width: 421px;
+	}
 }
