@@ -1,7 +1,3 @@
-* {
-  boxsizing: borderbox;
-}
-
 .row {
   max-width: 1000px;
   padding-left: 20px;

@@ -6,9 +6,7 @@ body {
 	background-color: #444444;
 	color: white;
 	font-size: 25px;
-	margin: ;	
 }
-
 
 header {
 	background-color: #666666;
@@ -26,7 +24,7 @@ header h1 {
 
 .inline {
 	display: inline-block;
-	width : 100px;
+	width: 100px;
 }
 
 button {
@@ -39,10 +37,9 @@ button {
     border-radius: 3px;
     width: 75px;
     font-size: 20px;
-    /*font-size: 16px;*/
 }
-/*Search Module*/
 
+/*Search Module*/
 label {
 	display: block;
 	font-size: 30px;
@@ -66,8 +63,8 @@ input[type="text"]{
 }
 
 .searchContainer {
- position: relative;
- margin-top: 5px;
+	position: relative;
+	margin-top: 5px;
 }
 
 .error {

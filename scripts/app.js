@@ -13,7 +13,7 @@ function processSearchResults(state, term, elements) {
 			var termData = {
 				term: term, 
 	 			translation: data.tuc[0].phrase.text
-	 		}
+	 		};
 	 		state.currTerm = termData; 	
 			renderSearchResults(termData, elements);
 			$("form").find(elements.search).val("");
