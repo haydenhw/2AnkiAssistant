@@ -106,7 +106,7 @@ function renderTextArea(output, elements) {
 function initSubmitHandler(state, BASE_URL, elements) {
 	$("form").submit(function(e) {
 		e.preventDefault();
-		var searchString = $("input[name='js-vidSearch']").val();
+		var searchString = $("input[name='js-vidSearch']").val().toLowerCase();
 		renderError("", elements);
 		elements.results.html("").removeClass("results");
 
